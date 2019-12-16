@@ -43,6 +43,8 @@ class BaseComponent(util.ApiClient):
             params.update(self.config)
         if headers is None and self.config.get("version") == util.API_VERSION_2:
             headers = {"Authorization": "Bearer {}".format(self.config.get("token"))}
+        if data is not None and self.config.get("version") == util.API_VERSION_2:
+            headers["Content-Type"] = "application/json"
         return super(BaseComponent, self).post_request(
             endpoint, params=params, data=data, headers=headers, cookies=cookies
         )
