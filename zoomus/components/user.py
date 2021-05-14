@@ -57,3 +57,14 @@ class UserComponentV2(base.BaseComponent):
     def get(self, **kwargs):
         util.require_keys(kwargs, "id")
         return self.get_request("/users/{}".format(kwargs.get("id")), params=kwargs)
+
+    def settings(self, **kwargs):
+        util.require_keys(kwargs, "id")
+        return self.get_request("/users/{}/settings".format(kwargs.get("id")), params=kwargs)
+
+    def patch_settings(self, **kwargs):
+        util.require_keys(kwargs, ["id", "data"])
+        return self.patch_request("/users/{}/settings".format(kwargs.get("id")),
+                                  data=kwargs.get("data"),
+                                  params=kwargs,
+                                  headers={"Content-Type": "application/json"})
